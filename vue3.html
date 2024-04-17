@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>vue3</title>
+</head>
+<body>
+    <div id="counter">
+        <button type="button" v-on:click="counter++">
+            counter : {{counter}}
+        </button>
+    </div>
+    <script>
+        // vue 인스턴스 생성
+        const app = Vue.createApp({
+            data(){
+                return{
+                    counter : 100
+                }
+            }
+        })
+        app.mount('#counter')
+    </script>
+</body>
+</html>
