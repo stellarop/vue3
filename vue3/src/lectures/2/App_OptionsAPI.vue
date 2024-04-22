@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>optionsAPI</h1>
+    <hr>
     <!-- 클릭 시 increment() 함수 실행-->
     <button v-on:click="increment()">count : {{count}}</button>
   </div>
