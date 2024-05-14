@@ -2,7 +2,9 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-dake bg-primary">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Navbar</a>
+				<a class="navbar-brand text-light" href="#" @click="goListPage"
+					>Navbar</a
+				>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -16,30 +18,50 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Home</a>
+						<li class="nav-item text-light">
+							<RouterLink class="nav-link" active-class="active" to="/"
+								>Home</RouterLink
+							>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
+						<li class="nav-item text-light">
+							<RouterLink class="nav-link" active-class="active" to="/about"
+								>About</RouterLink
+							>
+						</li>
+						<li class="nav-item text-light">
+							<RouterLink class="nav-link" active-class="active" to="/posts"
+								>게시글</RouterLink
+							>
+						</li>
+						<li class="nav-item text-light">
+							<RouterLink class="nav-link" active-class="active" to="/nested"
+								>Nested</RouterLink
+							>
 						</li>
 					</ul>
-					<form class="d-flex" role="search">
-						<input
-							class="form-control me-2"
-							type="search"
-							placeholder="Search"
-							aria-label="Search"
-						/>
-						<button class="btn btn-outline-success" type="submit">
-							Search
+					<div class="d-flex" role="search">
+						<button class="btn btn-outline-light" type="button" @click="goPage">
+							글쓰기
 						</button>
-					</form>
+					</div>
 				</div>
 			</div>
 		</nav>
 	</header>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router';
+
+const route = useRouter();
+
+const goPage = () => {
+	route.push('/posts/create');
+};
+
+const goListPage = () => {
+	route.push('/posts/');
+};
+</script>
 
 <style lang="scss" scoped></style>
