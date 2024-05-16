@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<h2>{{ form.title }}</h2>
-		<p>{{ form.content }}</p>
+		<h2>{{ post.title }}</h2>
+		<p>{{ post.content }}</p>
 		<p class="text-muted">2024-04-06</p>
 		<hr class="my-4" />
 		<div class="row g-2">
@@ -21,7 +21,9 @@
 				</button>
 			</div>
 			<div class="col-auto">
-				<button class="btn btn-outline-danger">삭제</button>
+				<button class="btn btn-outline-danger" @click="deleteDetail">
+					삭제
+				</button>
 			</div>
 		</div>
 		<!-- $route.query으로 쿼리스트링 값 받을 수 있음 
@@ -35,7 +37,7 @@
 import { useRouter } from 'vue-router';
 import { getPostById } from '@/api/posts';
 import { ref } from 'vue';
-
+import { deletePost } from '@/api/posts';
 // props로 게시글 고유 번호 넘길 수있음
 const props = defineProps({
 	id: Number,
@@ -44,13 +46,20 @@ const props = defineProps({
 // const route = useRoute();
 const router = useRouter();
 
-const form = ref({});
+const post = ref({});
 console.log('getPostById : ', getPostById(props.id));
 
-const fetchPost = () => {
-	const data = getPostById(props.id);
-	form.value = { ...data };
+const fetchPost = async () => {
+	const { data } = await getPostById(props.id);
+	setPost(data);
 };
+
+const setPost = ({ title, content, date }) => {
+	post.value.title = title;
+	post.value.content = content;
+	post.value.date = date;
+};
+
 fetchPost();
 const goListPage = () => {
 	router.push('/posts');
@@ -58,6 +67,15 @@ const goListPage = () => {
 
 const goEditPage = () => {
 	router.push('/posts/' + props.id + '/edit');
+};
+
+const deleteDetail = async () => {
+	try {
+		await deletePost(props.id);
+		router.push('/posts/');
+	} catch (error) {
+		console.error(error);
+	}
 };
 </script>
 

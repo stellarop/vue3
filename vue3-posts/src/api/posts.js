@@ -1,16 +1,26 @@
-// axios
-const posts = [
-	{ id: 1, title: '제목1', content: '내용1', date: '2024-04-05' },
-	{ id: 2, title: '제목2', content: '내용2', date: '2024-04-05' },
-	{ id: 3, title: '제목3', content: '내용3', date: '2024-04-05' },
-	{ id: 4, title: '제목4', content: '내용4', date: '2024-04-05' },
-	{ id: 5, title: '제목5', content: '내용5', date: '2024-04-05' },
-];
+import { posts } from '.';
 
-export function getPosts() {
-	return posts;
+export function getPosts(params) {
+	return posts.get('/', { params });
 }
 
 export function getPostById(id) {
-	return posts.find(item => item.id === id);
+	return posts.get('/' + id);
 }
+
+export function createPost(data) {
+	console.log('createPost : ', data);
+	return posts.post('/', data);
+}
+
+export function updatePost(id, data) {
+	console.log('updatePost : ', data);
+	return posts.put('/' + id, data);
+}
+
+export function deletePost(id) {
+	return posts.delete('/' + id);
+}
+
+// development : 'http://localhost:5173/posts/'
+// production : 'http://localhost:5174/posts/'
