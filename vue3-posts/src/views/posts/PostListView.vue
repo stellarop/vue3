@@ -2,70 +2,30 @@
 	<div>
 		<h2>게시글 목록</h2>
 		<hr class="my-4" />
-		<form @submit.prevent>
-			<div class="row g-3">
-				<div class="col">
-					<input v-model="params.title_like" type="text" class="form-control" />
-				</div>
-				<div class="col-3">
-					<select v-model="params._limit" class="form-select">
-						<option value="3">3개씩 보기</option>
-						<option value="6">6개씩 보기</option>
-						<option value="9">9개씩 보기</option>
-					</select>
-				</div>
-			</div>
-		</form>
+		<PostFilter
+			v-model:title="params.title_like"
+			v-model:limit="params._limit"
+		></PostFilter>
 		<hr class="my-4" />
-		<div class="row g-3">
-			<div v-for="post in posts" :key="post.id" class="col-4">
+		<AppGrid :items="posts">
+			<template v-slot="{ item }">
 				<PostItem
-					:title="post.title"
-					:content="post.content"
-					:date="post.date"
-					@click="goPage(post.id)"
-				></PostItem>
-			</div>
-		</div>
-		<nav class="mt-5" aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item" :class="{ disabled: !(params._page > 1) }">
-					<a
-						class="page-link"
-						href="#"
-						aria-label="Previous"
-						@click.prevent="--params._page"
-					>
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-				<li
-					v-for="page in pageCount"
-					:key="page"
-					class="page-item"
-					:class="{ active: params._page === page }"
-				>
-					<a class="page-link" href="#" @click.prevent="params._page = page">{{
-						page
-					}}</a>
-				</li>
-				<li
-					class="page-item"
-					:class="{ disabled: !(params._page < pageCount) }"
-				>
-					<a
-						class="page-link"
-						href="#"
-						aria-label="Next"
-						@click.prevent="++params._page"
-					>
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<hr class="my-5" />
-		<AppCard><PostDetail :id="1"></PostDetail></AppCard>
+					:title="item.title"
+					:content="item.content"
+					:date="item.date"
+					@click="goPage(item.id)"
+				></PostItem
+			></template>
+		</AppGrid>
+
+		<AppPage
+			:currentPage="params._page"
+			:pageCount="pageCount"
+			@page="page => (params._page = page)"
+		></AppPage>
+
+		<!--<hr class="my-5" />
+		<AppCard><PostDetail :id="1"></PostDetail></AppCard>-->
 	</div>
 </template>
 
@@ -76,6 +36,9 @@ import { getPosts } from '@/api/posts';
 import { computed, ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import AppCard from '@/components/AppCard.vue';
+import AppPage from '@/components/AppPage.vue';
+import AppGrid from '@/components/AppGrid.vue';
+import PostFilter from '@/components/posts/PostFilter.vue';
 // 페이지 이동을 위한 라우터 객체 선언
 const router = useRouter();
 
