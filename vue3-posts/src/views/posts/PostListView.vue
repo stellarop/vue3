@@ -14,6 +14,7 @@
 					:content="item.content"
 					:date="item.date"
 					@click="goPage(item.id)"
+					@modal="openModal(item)"
 				></PostItem
 			></template>
 		</AppGrid>
@@ -23,6 +24,16 @@
 			:pageCount="pageCount"
 			@page="page => (params._page = page)"
 		></AppPage>
+
+		<!-- Teleport는 안에 있는 컴포넌트를 이동할 수 있음-->
+		<Teleport to="#modal">
+			<PostModal
+				v-model="show"
+				:title="modalTitle"
+				:content="modalContent"
+				:date="modalDate"
+			/>
+		</Teleport>
 
 		<!--<hr class="my-5" />
 		<AppCard><PostDetail :id="1"></PostDetail></AppCard>-->
@@ -39,6 +50,7 @@ import AppCard from '@/components/AppCard.vue';
 import AppPage from '@/components/AppPage.vue';
 import AppGrid from '@/components/AppGrid.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
+import PostModal from '@/components/posts/PostModal.vue';
 // 페이지 이동을 위한 라우터 객체 선언
 const router = useRouter();
 
@@ -93,6 +105,20 @@ const goPage = id => {
 		hash: '#World',
 	});
 };
+
+// modal
+const show = ref(false);
+const openModal = item => {
+	modalTitle.value = item.title;
+	modalContent.value = item.content;
+	modalDate.value = item.date;
+	show.value = true;
+};
+// const closeModal = () => (show.value = false);
+
+const modalTitle = ref('');
+const modalContent = ref('');
+const modalDate = ref('');
 </script>
 
 <style lang="scss" scoped></style>
