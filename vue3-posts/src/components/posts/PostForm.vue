@@ -2,7 +2,9 @@
 	<form>
 		<div class="mb-3">
 			<label for="title" class="form-label">제목</label>
+			<!-- v-color="'red'" -->
 			<input
+				v-focus
 				:value="title"
 				@input="$emit('update:title', $event.target.value)"
 				type="text"
@@ -27,6 +29,12 @@
 </template>
 
 <script setup>
+// const vFocus = {
+// 	mounted: el => {
+// 		el.focus();
+// 	},
+// };
+
 // 부모 컴포넌트에서 보낼 자식 컴포넌트 데이터
 defineProps({
 	title: String,

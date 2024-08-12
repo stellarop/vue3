@@ -20,6 +20,7 @@
 				</button>
 			</template>
 		</PostForm>
+		<AppAlert :items="alerts"></AppAlert>
 	</div>
 </template>
 
@@ -46,9 +47,25 @@ const save = () => {
 			date: Date.now(),
 		});
 		router.push('/posts');
+		vSuccess('등록이 완료되었습니다.');
 	} catch (error) {
 		console.error(error);
 	}
+};
+
+// alert
+const alerts = ref([]);
+
+const vAlert = (message, type = 'error') => {
+	alerts.value.push({ message, type });
+
+	setTimeout(() => {
+		alerts.value.shift();
+	}, 3000);
+};
+
+const vSuccess = message => {
+	vAlert(message, 'success');
 };
 </script>
 
