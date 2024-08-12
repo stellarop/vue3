@@ -12,7 +12,7 @@
 				<PostItem
 					:title="item.title"
 					:content="item.content"
-					:date="item.date"
+					:date="$dayjs(item.date).format('YYYY-HH-MM')"
 					@click="goPage(item.id)"
 					@modal="openModal(item)"
 				></PostItem
@@ -31,7 +31,7 @@
 				v-model="show"
 				:title="modalTitle"
 				:content="modalContent"
-				:date="modalDate"
+				:date="$dayjs(modalDate).format('YYYY-HH-MM')"
 			/>
 		</Teleport>
 
@@ -46,9 +46,6 @@ import PostDetail from '@/views/posts/PostDetail.vue';
 import { getPosts } from '@/api/posts';
 import { computed, ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-import AppCard from '@/components/AppCard.vue';
-import AppPage from '@/components/AppPage.vue';
-import AppGrid from '@/components/AppGrid.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
 import PostModal from '@/components/posts/PostModal.vue';
 // 페이지 이동을 위한 라우터 객체 선언

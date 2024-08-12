@@ -27,7 +27,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { getPostById } from '@/api/posts';
 import { updatePost } from '@/api/posts';
 import PostForm from '@/components/posts/PostForm.vue';
-import AppAlert from '@/components/AppAlert.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -60,7 +59,7 @@ const goDetailPage = () => {
 const edit = () => {
 	try {
 		updatePost(route.params.id, { ...form.value });
-		vAlert('수정이 완료되었습니다.', 'success');
+		vSuccess('수정이 완료되었습니다.');
 		// router.push('/posts/' + route.params.id);
 	} catch (error) {
 		vAlert(error.message);
@@ -77,6 +76,10 @@ const vAlert = (message, type = 'error') => {
 	setTimeout(() => {
 		alerts.value.shift();
 	}, 3000);
+};
+
+const vSuccess = message => {
+	vAlert(message, 'success');
 };
 </script>
 

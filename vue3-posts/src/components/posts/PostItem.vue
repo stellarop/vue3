@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-import AppCard from '@/components/AppCard.vue';
-
 // setup 함수에서 props을 정의할때는 매크로 함수로 정의
 defineProps({
 	title: {

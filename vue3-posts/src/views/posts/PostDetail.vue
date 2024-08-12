@@ -2,7 +2,7 @@
 	<div>
 		<h2>{{ post.title }}</h2>
 		<p>{{ post.content }}</p>
-		<p class="text-muted">2024-04-06</p>
+		<p class="text-muted">{{ $dayjs(post.date).format('YYYY-HH-MM') }}</p>
 		<hr class="my-4" />
 		<div class="row g-2">
 			<div class="col-auto">
